@@ -1,7 +1,9 @@
 from django.urls import path
 
-from tasks import views
+from .views import index
+
+app_name = 'tasks'
 
 urlpatterns = [
-    path('', views.index),
+    path('', index, name='main_page'),
 ]

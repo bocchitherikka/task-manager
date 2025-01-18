@@ -1,0 +1,16 @@
+{% load static %}
+<div class="col">
+    <div class="card text-center h-100">
+        <div class="card-header bg-primary text-white">{{ task.name }}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{ task.name }}</h5>
+            <p class="card-text">{{ task.description }}</p>
+        </div>
+        <div class="card-footer">
+            Дата создания: {{ task.date }}
+            {% if task.end_date %}
+                Выполнить к {{ task.end_date }}
+            {% endif %}
+        </div>
+    </div>
+</div>

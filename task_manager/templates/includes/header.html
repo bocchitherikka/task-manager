@@ -2,16 +2,20 @@
 <header style="background: #F3CBCE">
   <nav class="navbar navbar-light" style="font-weight:bold">
     <div class="container">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="{% url 'tasks:main_page' %}">
         <img src="{% static 'img/logo.png' %}" width="70" height="70" class="d-inline-block; vertical-align: middle" alt="">
-        <span style="font-size:26px; font-family: monospace; vertical-align: middle"><b>AAAAAAAAA</b></span>
+        <span style="font-size:26px; font-family: monospace; vertical-align: middle; color: #AF7866"><b>TASKF#CKER</b></span>
       </a>
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link"
-             href=""
+          <a class="nav-link
+             {% if request.resolver_match.view_name  == 'tasks:main_page' %}
+              active
+             {% endif %}
+             "
+             href="{% url 'tasks:main_page' %}"
           >
-            Об авторе
+            Ваши таски
           </a>
         </li>
         <li class="nav-item">

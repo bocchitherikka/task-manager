@@ -1,17 +1,12 @@
 {% extends 'base.html' %}
-{% load cache %}
 {% load static %}
-{% block title %}Ваши цели и задачи{% endblock title %}
+{% block title %}Ваши таски{% endblock title %}
 {% block body %}
-{% for task in tasks %}
-<div>
-  <h3>{{ task.name }}</h3>
-  <p>{{ task.description }}</p>
-  <p>{{ task.status }}</p>
-  <p>{{ task.date }}</p>
-  {% if task.end_date %}
-  <p>{{ task.end_date }}</p>
-  {% endif %}
+<div class="container mt-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for task in tasks %}
+      {% include 'includes/task.html' %}
+    {% endfor %}
+  </div>
 </div>
-{% endfor %}
 {% endblock body %}
