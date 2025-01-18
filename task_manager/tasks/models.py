@@ -20,7 +20,7 @@ class Task(models.Model):
         max_length=16
     )
     date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
