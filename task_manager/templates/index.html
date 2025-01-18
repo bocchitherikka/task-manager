@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load cache %}
+{% load static %}
+{% block title %}Ваши цели и задачи{% endblock title %}
+{% block body %}
+{% for task in tasks %}
+<div>
+  <h3>{{ task.name }}</h3>
+  <p>{{ task.description }}</p>
+  <p>{{ task.status }}</p>
+  <p>{{ task.date }}</p>
+  {% if task.end_date %}
+  <p>{{ task.end_date }}</p>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock body %}
