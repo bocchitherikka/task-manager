@@ -144,3 +144,5 @@ dmypy.json
 .history/
 
 .mypy_cache
+
+task_manager/static_collected
