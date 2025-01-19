@@ -7,45 +7,48 @@
         <span style="font-size:26px; font-family: monospace; vertical-align: middle; color: #AF7866"><b>TASKF#CKER</b></span>
       </a>
       <ul class="nav nav-pills">
-        <li class="nav-item">
-          <a class="nav-link
-             {% if request.resolver_match.view_name  == 'tasks:main_page' %}
-              active
-             {% endif %}
-             "
-             href="{% url 'tasks:main_page' %}"
-          >
-            Ваши таски
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"
-             href=""
-          >
-            грусть
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"
-             href=""
-          >
-            Новая запись
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link-light" href="">Изменить пароль</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link-light" href="">Выйти</a>
-        </li>
-        <li>
-          <a class="nav-link link-light"
-             href=""
-          >
-            Пользователь: SSSSSSSSSS
-          </a>
-        </li>
-      </ul>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link
+               {% if request.resolver_match.view_name  == 'tasks:main_page' %}
+                active
+               {% endif %}
+               "
+               href="{% url 'tasks:main_page' %}"
+            >
+              Ваши таски
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+               href=""
+            >
+              Новая таска
+            </a>
+          </li>
+          <li class="nav-item">
+            <form method="POST" action="{% url 'users:logout' %}" style="display:inline;">
+              {% csrf_token %}
+              <button class="btn btn-link nav-link link-light" style="background:none; border:none; cursor:pointer;">
+                Выйти
+              </button>
+            </form>
+          </li>
+          <li>
+            <a class="nav-link link-light"
+               href=""
+            >
+              Профиль {{ request.user.username }}
+            </a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'users:login' %}">Войти</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'users:signup' %}">Регистрация</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
