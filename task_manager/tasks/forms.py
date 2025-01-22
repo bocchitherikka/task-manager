@@ -1,0 +1,48 @@
+from datetime import date
+
+from django import forms
+from django.core.exceptions import ValidationError
+
+from .models import Task, TASK_STATUS_CHOICES
+
+
+class TaskForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(),
+        label='Название таски'
+    )
+    description = forms.CharField(
+        widget=forms.Textarea,
+        label='Более подробное описание таски'
+    )
+    status = forms.ChoiceField(
+        choices=TASK_STATUS_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Статус'
+    )
+    end_date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'min': date.today().strftime('%Y-%m-%d')
+        }),
+        label="Дата дедлайна"
+    )
+    contributors = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 1}),
+        label="Укажите юзернеймы пользователей, "
+              "с которыми будете вместе работать "
+              "над этой таской (через пробел, без "
+              "лишних разделительных символов)"
+    )
+
+    class Meta:
+        model = Task
+        fields = ['name', 'description', 'status', 'end_date',]
+
+    def clean_contributors(self):
+        info = self.cleaned_data['contributors']
+        if info:
+            return info.split(' ')
+        return False
