@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load user_filters %}
+{% block title %}Таска "{{ task }}"{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Это вам предстоит сделать! Если не забьёте, конечно</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="id_name" class="form-label fw-bold">Название таски</label>
+                            {{ form.name|addclass:"form-control" }}
+                        </div>
+                        <div class="mb-4">
+                            <label for="id_status" class="form-label fw-bold">Статус</label>
+                            {{ form.status|addclass:"form-control" }}
+                        </div>
+                        <div class="mb-4">
+                            <label for="id_description" class="form-label fw-bold">Описание таски</label>
+                            {{ form.description|addclass:"form-control" }}
+                        </div>
+                        <div class="mb-4">
+                            <label for="id_end_date" class="form-label fw-bold">Дата дедлайна</label>
+                            {{ form.end_date|addclass:"form-control" }}
+                        </div>
+                        <div class="mb-4">
+                            <label for="id_contributors" class="form-label fw-bold">
+                                Не делайте задачи в одиночку!
+                                Укажите через пробел юзернеймы тех,
+                                кто будет работать с вами над таской
+                            </label>
+                            {{ form.contributors|addclass:"form-control" }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Применить изменения</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Дополнительная информация -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Детали таски</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 ps-0">
+                            <strong>Создана:</strong> {{ task.date }}
+                        </li>
+                        <li class="list-group-item border-0 ps-0">
+                            <strong>Дедлайн:</strong> {{ task.end_date|default:"Нет. Главное не забей" }}
+                        </li>
+                        <li class="list-group-item border-0 ps-0">
+                            <strong>Статус:</strong> {{ task.get_status_display }}
+                        </li>
+                        <li class="list-group-item border-0 ps-0">
+                            <strong>Автор:</strong> {{ task.author.username }}
+                        </li>
+                        <li class="list-group-item border-0 ps-0">
+                            <strong>Контрибьюторы:</strong>
+                            {% if task.contributors.exists %}
+                                {{ task.contributors.all|join:", " }}
+                            {% else %}
+                                Нет
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

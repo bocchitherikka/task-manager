@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  {% if casino == 99 %}
+    соси жопу долбоеб
+  {% else %}
+    Нет доступа
+  {% endif %}
+{% endblock title %}
+{% block body %}
+<div class="container text-center mt-5">
+  <h1 class="display-4 text-danger">Доступ запрещен</h1>
+  <p class="lead mt-3">Это не ваша таска и вы над ней не работаете. Захотелось погорбатиться за других?</p>
+  <a href="{% url 'tasks:main_page' %}" class="btn btn-primary mt-4">К своим таскам</a>
+</div>
+{% endblock body %}

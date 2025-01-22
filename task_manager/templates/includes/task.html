@@ -1,16 +1,16 @@
 {% load static %}
 <div class="col">
-    <a style="text-decoration: none" href="{% url 'tasks:main_page' %}">
+    <a style="text-decoration: none" href="{% url 'tasks:task_detail' task.id %}">
     <div class="card text-center h-100">
         <div class="card-header bg-primary text-white">{{ task.name }}</div>
         <div class="card-body">
             <p class="card-text">{{ task.description }}</p>
         </div>
         <div class="card-footer">
-            Дата создания: {{ task.date }}
             {% if task.end_date %}
-                <br>
                 Выполнить к {{ task.end_date }}
+            {% else %}
+                Без дедлайна
             {% endif %}
         </div>
     </div>
