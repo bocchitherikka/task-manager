@@ -5,6 +5,7 @@ from django.db.models import BooleanField, Value, Case, When, Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
+from django.urls import reverse
 
 from .forms import TaskForm
 from .models import Task, User
@@ -50,7 +51,7 @@ def add_task(request):
                 contributor = get_object_or_404(User, username=username)
                 task.contributors.add(contributor)
         task.save()
-        return redirect('tasks:main_page')
+        return redirect(reverse('tasks:main_page') + '?status=in_progress')
     context = {
         'form': form,
     }
@@ -60,6 +61,7 @@ def add_task(request):
 @login_required
 def task_detail(request, task_id):
     template = 'task_detail.html'
+    edit = request.GET.get('edit', False)
     task = get_object_or_404(Task, pk=task_id)
     user = request.user
     contributors = task.contributors.all()
@@ -85,6 +87,7 @@ def task_detail(request, task_id):
     context = {
         'form': form,
         'task': task,
+        'edit': edit
     }
     return render(request, template, context)
 
