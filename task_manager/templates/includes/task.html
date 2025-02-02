@@ -4,7 +4,7 @@
     <div class="card text-center h-100">
         <div class="card-header bg-primary text-white"><b>{{ task.name }}</b></div>
         <div class="card-body">
-            <p class="card-text">{{ task.description|linebreaksbr }}</p>
+            <p class="card-text">{{ task.description }}</p>
         </div>
         <div class="card-footer">
             {% if task.end_date %}
