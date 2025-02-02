@@ -1,7 +1,7 @@
 from random import randint
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import BooleanField, Value, Case, When
+from django.db.models import BooleanField, Value, Case, When, Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
@@ -13,7 +13,15 @@ from .models import Task, User
 @login_required
 def index(request):
     template = 'index.html'
-    tasks = Task.objects.filter(author=request.user)
+    status = request.GET.get('status')
+    if status:
+        tasks = Task.objects.filter(
+            Q(author=request.user) | Q(contributors=request.user), status=status
+        )
+    else:
+        tasks = Task.objects.filter(
+            Q(author=request.user) | Q(contributors=request.user)
+        )
     tasks = tasks.annotate(
         has_end_date=Case(
             When(end_date__isnull=False, then=Value(True)),
@@ -23,7 +31,8 @@ def index(request):
     )
     tasks = tasks.order_by('-has_end_date', 'end_date')
     context = {
-        'tasks': tasks
+        'tasks': tasks,
+        'status': status
     }
     return render(request, template, context)
 

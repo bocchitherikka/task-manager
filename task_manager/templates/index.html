@@ -2,6 +2,78 @@
 {% load static %}
 {% block title %}Ваши таски{% endblock title %}
 {% block body %}
+<nav class="navbar navbar-light" style="font-weight:bold; margin-top: 24px">
+  <div class="container">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link
+           {% if status == 'in_progress' %}
+            active
+           {% endif %}
+           "
+           href="?status=in_progress"
+        >
+            Активные
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link
+           {% if status == 'postponed' %}
+            active
+           {% endif %}
+           "
+           href="?status=postponed"
+        >
+          Отложено
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link
+           {% if status == 'completed' %}
+            active
+           {% endif %}
+           "
+           href="?status=completed"
+        >
+          Выполнено
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link
+           {% if status == 'dropped' %}
+            active
+           {% endif %}
+           "
+           href="?status=dropped"
+        >
+          Брошено
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link
+           {% if status == 'cancelled' %}
+            active
+           {% endif %}
+           "
+           href="?status=cancelled"
+        >
+          Отменено
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link
+           {% if not status %}
+            active
+           {% endif %}
+           "
+           href="{% url 'tasks:main_page' %}"
+        >
+          <b>Все таски</b>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div class="container mt-4">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for task in tasks %}

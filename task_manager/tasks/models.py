@@ -4,11 +4,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 default = 0
 TASK_STATUS_CHOICES = [
-    ('IP', 'Выполняется'),
-    ('COM', 'Выполнено'),
-    ('PP', 'Отложено'),
-    ('DR', 'Брошено'),
-    ('CAN', 'Отменено')
+    ('in_progress', 'Выполняется'),
+    ('completed', 'Выполнено'),
+    ('postponed', 'Отложено'),
+    ('dropped', 'Брошено'),
+    ('cancelled', 'Отменено')
 ]
 
 

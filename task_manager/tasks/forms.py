@@ -24,7 +24,7 @@ class TaskForm(forms.ModelForm):
         required=False,
         widget=forms.DateInput(attrs={
             'type': 'date',
-            'min': date.today().strftime('%Y-%m-%d')
+            'min': '1970-01-01'
         }),
         label="Дата дедлайна"
     )
