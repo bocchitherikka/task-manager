@@ -12,37 +12,41 @@
                             <div class="mb-4 col-md-10" style="margin-top: 0px; margin-bottom: 12px !important; padding-left: 20px; padding-right: 0px">
                                 <h2 class="card-title"><b>{{ task.name }}</b></h2>
                             </div>
-                            <div class="mb-4 col-md-2" style="padding-right: 16px; margin-top: 0px; margin-bottom: 12px !important;">
-                                <a href="?edit=true" class="btn btn-primary d-flex align-items-center justify-content-center">
-                                    <span style="font-size: 16px">Редактировать</span>
-                                </a>
-                            </div>
+                            {% if user == task.author %}
+                                <div class="mb-4 col-md-2" style="padding-right: 16px; margin-top: 0px; margin-bottom: 12px !important;">
+                                    <a href="?edit=true" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                        <span style="font-size: 16px">Редактировать</span>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="row align-items-end">
-                                <style>
-                                    select.form-control {
-                                        text-align: center;      /* Для Chrome */
-                                        text-align-last: center; /* Для Firefox */
-                                        text-indent: 1px;        /* Костыль для Safari */
-                                    }
-                                </style>
-                                <div class="mb-4 col-md-2">
-                                    <label for="id_status" class="form-label fw-bold">Статус</label>
-                                    {{ form.status|addclass:"form-control" }}
+                        {% if user == task.author %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row align-items-end">
+                                    <style>
+                                        select.form-control {
+                                            text-align: center;      /* Для Chrome */
+                                            text-align-last: center; /* Для Firefox */
+                                            text-indent: 1px;        /* Костыль для Safari */
+                                        }
+                                    </style>
+                                    <div class="mb-4 col-md-2">
+                                        <label for="id_status" class="form-label fw-bold">Статус</label>
+                                        {{ form.status|addclass:"form-control" }}
+                                    </div>
+                                    <div class="mb-4 col-md-2">
+                                        <button type="submit" class="btn btn-primary" style="">Применить</button>
+                                    </div>
                                 </div>
-                                <div class="mb-4 col-md-2">
-                                    <button type="submit" class="btn btn-primary" style="">Применить</button>
+                                <div style="display: none">
+                                    {{ form.name }}
+                                    {{ form.description }}
+                                    {{ form.end_date }}
+                                    {{ form.contributors }}
                                 </div>
-                            </div>
-                            <div style="display: none">
-                                {{ form.name }}
-                                {{ form.description }}
-                                {{ form.end_date }}
-                                {{ form.contributors }}
-                            </div>
-                        </form>
+                            </form>
+                        {% endif %}
                         <div class="mb-4">
                             <p style="font-size: 20px">{{ task.description|linebreaksbr }}</h5>
                         </div>
