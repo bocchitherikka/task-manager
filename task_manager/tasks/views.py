@@ -2,35 +2,25 @@ from random import randint
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import BooleanField, Value, Case, When, Q
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template import loader
 from django.urls import reverse
 
+from .components import (
+    filter_tasks_by_status,
+    get_request_user_tasks,
+    order_tasks_by_end_date
+)
 from .forms import TaskForm
 from .models import Task, User
 
 
 @login_required
-def index(request):
-    template = 'index.html'
+def main_page(request):
+    template = 'main_page.html'
+    tasks = get_request_user_tasks(request)
     status = request.GET.get('status')
-    if status:
-        tasks = Task.objects.filter(
-            Q(author=request.user) | Q(contributors=request.user), status=status
-        )
-    else:
-        tasks = Task.objects.filter(
-            Q(author=request.user) | Q(contributors=request.user)
-        )
-    tasks = tasks.annotate(
-        has_end_date=Case(
-            When(end_date__isnull=False, then=Value(True)),
-            default=Value(False),
-            output_field=BooleanField()
-        )
-    )
-    tasks = tasks.order_by('-has_end_date', 'end_date')
+    tasks = filter_tasks_by_status(tasks, status)
+    tasks = order_tasks_by_end_date(tasks)
     context = {
         'tasks': tasks,
         'status': status
@@ -45,11 +35,11 @@ def add_task(request):
     if form.is_valid():
         task = form.save(commit=False)
         task.author = request.user
+        task.save()
         contributors_usernames = form.clean_contributors()
-        if contributors_usernames:
-            for username in contributors_usernames:
-                contributor = get_object_or_404(User, username=username)
-                task.contributors.add(contributor)
+        for username in contributors_usernames:
+            contributor = get_object_or_404(User, username=username)
+            task.contributors.add(contributor)
         task.save()
         return redirect(reverse('tasks:main_page') + '?status=in_progress')
     context = {

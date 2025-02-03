@@ -41,8 +41,8 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['name', 'description', 'status', 'end_date',]
 
-    def clean_contributors(self):
+    def clean_contributors(self) -> list:
         info = self.cleaned_data['contributors']
         if info:
             return ''.join(info).split(' ')
-        return False
+        return []
