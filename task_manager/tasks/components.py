@@ -64,7 +64,7 @@ def save_task_form(
     return task
 
 
-def request_user_is_has_access(
+def request_user_is_has_task_access(
         request: HttpRequest,
         task: Task,
         edit: Optional[str]

@@ -1,5 +1,3 @@
-from random import randint
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -9,7 +7,7 @@ from .components import (
     filter_tasks_by_status,
     get_request_user_tasks,
     order_tasks_by_end_date,
-    request_user_is_has_access,
+    request_user_is_has_task_access,
     save_task_form
 )
 from .forms import TaskForm
@@ -52,7 +50,7 @@ def task_detail(request, task_id):
     edit = request.GET.get('edit', False)
     task = get_object_or_404(Task, pk=task_id)
 
-    if not request_user_is_has_access(request, task, edit):
+    if not request_user_is_has_task_access(request, task, edit):
         return render(request, 'access_denied.html')
 
     form = TaskForm(request.POST or None, instance=task)
@@ -66,7 +64,5 @@ def task_detail(request, task_id):
         'task': task,
         'edit': edit,
         'user': request.user
-
     }
     return render(request, template, context)
-
