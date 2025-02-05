@@ -35,3 +35,9 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['status']),
+            models.Index(fields=['end_date'])
+        ]

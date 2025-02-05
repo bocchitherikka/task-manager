@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse
+
+from task_manager.settings import BASE_REDIRECT_URL
 
 from .components import (
     add_contributors_to_task,
@@ -11,7 +12,7 @@ from .components import (
     save_task_form
 )
 from .forms import TaskForm
-from .models import Task, User
+from .models import Task
 
 
 @login_required
@@ -35,8 +36,7 @@ def add_task(request):
 
     if form.is_valid():
         save_task_form(form, request)
-        url = reverse('tasks:main_page') + '?status=in_progress'
-        return redirect(url)
+        return redirect(BASE_REDIRECT_URL)
 
     context = {
         'form': form,

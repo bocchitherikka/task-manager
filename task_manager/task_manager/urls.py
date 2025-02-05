@@ -5,4 +5,5 @@ urlpatterns = [
     path('', include('tasks.urls', namespace='tasks')),
     path('auth/', include('users.urls', namespace='users')),
     path('admin/', admin.site.urls),
+    path('friends/', include('friends.urls', namespace='friends'))
 ]

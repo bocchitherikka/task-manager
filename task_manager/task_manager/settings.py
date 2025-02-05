@@ -15,6 +15,7 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
+    'friends.apps.FriendsConfig',
     'users.apps.UsersConfig',
     'tasks.apps.TasksConfig',
     'django.contrib.admin',
@@ -97,3 +98,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/auth/login/'
 LOGOUT_REDIRECT_URL = '/auth/login/'
+BASE_REDIRECT_URL = '/?status=in_progress'
