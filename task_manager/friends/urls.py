@@ -10,17 +10,17 @@ app_name = 'friends'
 
 urlpatterns = [
     path(
-        'delete/<int:user_id>/',
+        'delete/<slug:username>/',
         delete_friendship,
         name='delete_friendship'
     ),
     path(
-        'add/<int:user_id>/',
+        'add/<slug:username>/',
         send_friendship_request,
         name='send_request'
     ),
     re_path(
-        r'^(?P<action>accept|reject)/(?P<user_id>\d+)',
+        r'^(?P<action>accept|reject)/(?P<username>[\w-]+)',
         process_friendship_request,
         name='process_request'
     )

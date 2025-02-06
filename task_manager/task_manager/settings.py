@@ -15,6 +15,7 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
+    'user_profile.apps.UserProfileConfig',
     'friends.apps.FriendsConfig',
     'users.apps.UsersConfig',
     'tasks.apps.TasksConfig',
