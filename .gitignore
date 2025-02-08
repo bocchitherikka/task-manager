@@ -146,3 +146,4 @@ dmypy.json
 .mypy_cache
 
 task_manager/static_collected
+task_manager/static/profile_pictures
