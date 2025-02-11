@@ -9,7 +9,8 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         profile = Profile.objects.create(
             owner=instance,
-            privacy='open'
+            privacy='open',
+            dark_theme=False
         )
         SocialLinks.objects.create(
             profile=profile
